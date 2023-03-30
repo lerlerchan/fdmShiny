@@ -12,6 +12,9 @@ Its supports scholars in easy use of
 
 - Analytics and Plots data in Spider or radar chart
 
+## Concept
+![alt text](image.jpg)
+
 ### How to use FDMShiny
 
 ## Installation
