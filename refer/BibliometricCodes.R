@@ -1,6 +1,7 @@
 ###Bibliometrix codes ###
 install.packages("bibliometrix")
 library(bibliometrix)
+install.packages("rlang")
 
 #To upgrade
 install.packages("remotes")
