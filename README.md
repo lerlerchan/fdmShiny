@@ -1,8 +1,13 @@
 # FDMShiny
 ## A shinny app for visualisation tool for Fuzzy Delphi Method Information
 
+- a web-based app included Fuzzy Delphi method (FDM) package
+
+- allows no coders to use FDM pacakage
+
+- developed in Shiny environment
+
 ## Overview
-**FDMShiny** is a web-interface for non-coders
 
 Its supports scholars in easy use of 
 
@@ -11,6 +16,10 @@ Its supports scholars in easy use of
 - Data filtering
 
 - Analytics and Plots data in Spider or radar chart
+
+## Dataset to be analysed
+### File formats
+- CSV/xlsx
 
 ## Concept
 ![Image Credit: ResearchGate: Syumsul Nor Azlan Mohamad](/images/Fuzzy-Delphi-method.png)
@@ -41,6 +50,8 @@ Tringular Fuzzy Number (Degree of Consensus)
 
 
 ### How to use FDMShiny
+
+
 
 ## Installation
 

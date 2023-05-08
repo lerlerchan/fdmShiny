@@ -1,46 +1,76 @@
 library(shiny)
 
-# Define UI ----
+# Define UI for dataset viewer app ----
 ui <- fluidPage(
-  titlePanel("My Shiny App"),
+
+  # App title ----
+  titlePanel("Fuzzy Delphi Method Shiny"),
+
+  # Sidebar layout with a input and output definitions ----
   sidebarLayout(
+
+    # Sidebar panel for inputs ----
     sidebarPanel(
-      h2("Installation"),
-      p("Shiny is available on CRAN, so you can install it in the usual way from your R console:"),
-      code('install.packages("shiny")'),
-      br(),
-      br(),
-      br(),
-      br(),
-      img(src = "rstudio.png", height = 70, width = 200),
-      br(),
-      "Shiny is a product of ", 
-      span("RStudio", style = "color:blue")
+      # Input: dataset
+      fileInput("file", label = h3("File input"), multiple = FALSE, accept=NULL),
+
+      hr(),
+      fluidRow(column(4, verbatimTextOutput("value"))),
+
+      # Input: Selector for choosing dataset ----
+      selectInput(inputId = "dataset",
+                  label = "Choose a dataset:",
+                  choices = c("rock", "pressure", "cars")),
+
+      # Input: Numeric entry for number of obs to view ----
+      numericInput(inputId = "obs",
+                   label = "Number of observations to view:",
+                   value = 10)
     ),
+
+    # Main panel for displaying outputs ----
     mainPanel(
-      h1("Introducing Shiny"),
-      p("Shiny is a new package from RStudio that makes it ", 
-        em("incredibly easy "), 
-        "to build interactive web applications with R."),
-      br(),
-      p("For an introduction and live examples, visit the ",
-        a("Shiny homepage.", 
-          href = "http://shiny.rstudio.com")),
-      br(),
-      h2("Features"),
-      p("- Build useful web applications with only a few lines of code—no JavaScript required."),
-      p("- Shiny applications are automatically 'live' in the same way that ", 
-        strong("spreadsheets"),
-        " are live. Outputs change instantly as users modify inputs, without requiring a reload of the browser.")
+
+      # Output: Verbatim text for data summary ----
+      verbatimTextOutput("summary"),
+
+      # Output: HTML table with requested number of observations ----
+      tableOutput("view")
+
     )
   )
 )
 
-# Define server logic ----
+# Define server logic to summarize and view selected dataset ----
 server <- function(input, output) {
-  
-  
+
+  # Return the requested dataset ----
+  datasetInput <- reactive({
+    switch(input$dataset,
+           "rock" = rock,
+           "pressure" = pressure,
+           "cars" = cars)
+  })
+
+  # Generate a summary of the dataset ----
+  output$summary <- renderPrint({
+    dataset <- datasetInput()
+    summary(dataset)
+  })
+
+  # Show the first "n" observations ----
+  output$view <- renderTable({
+    head(datasetInput(), n = input$obs)
+  })
+
+   # You can access the value of the widget with input$file, e.g.
+  output$value <- renderPrint({
+    str(input$file)
+  })
+
 }
 
-# Run the app ----
+
+
+# Create Shiny app ----
 shinyApp(ui = ui, server = server)
